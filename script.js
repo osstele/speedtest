@@ -19,6 +19,11 @@ function drawSpeedometer(speed) {
     ctx.lineWidth = 2;
     ctx.stroke();
 
+    // Draw the colored zones
+    drawZone(ctx, 20, 40, 'green');
+    drawZone(ctx, 40, 80, 'orange');
+    drawZone(ctx, 80, 180, 'red');
+
     // Draw the speed index
     ctx.font = '20px Arial';
     ctx.fillStyle = '#000';
@@ -37,7 +42,7 @@ function drawSpeedometer(speed) {
     ctx.beginPath();
     ctx.moveTo(150, 150);
     ctx.lineTo(needleX, needleY);
-    ctx.strokeStyle = '#FF0000';
+    ctx.strokeStyle = '#00008B'; // Darker needle color
     ctx.lineWidth = 5;
     ctx.stroke();
 
@@ -45,6 +50,17 @@ function drawSpeedometer(speed) {
     ctx.font = '30px Arial';
     ctx.fillStyle = '#FF0000';
     ctx.fillText(`${speed} km/h`, 100, 200);
+}
+
+// Function to draw colored zones
+function drawZone(ctx, start, end, color) {
+    const startAngle = (start - 90) * (Math.PI / 180);
+    const endAngle = (end - 90) * (Math.PI / 180);
+    ctx.beginPath();
+    ctx.arc(150, 150, 130, startAngle, endAngle);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 10;
+    ctx.stroke();
 }
 
 // Function to update speed
