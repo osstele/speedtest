@@ -42,7 +42,8 @@ function drawNeedle(speed) {
     ctx.moveTo(centerX, centerY);
     ctx.lineTo(x, y);
     ctx.strokeStyle = 'red'; // Change the color to red
-    ctx.lineWidth = 5; // Make the needle thicker
+    ctx.lineWidth = 10; // Make the needle thicker
     ctx.stroke();
 }
+
 drawSpeedometer();
