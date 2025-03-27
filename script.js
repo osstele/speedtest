@@ -12,11 +12,14 @@ function drawSpeedometer() {
     // Draw outer circle
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+    ctx.strokeStyle = '#000'; // Set stroke color
+    ctx.lineWidth = 5; // Set line width for outer circle
     ctx.stroke();
 
     // Draw background ratings
     ctx.font = '12px Arial';
     ctx.textAlign = 'center';
+    ctx.fillStyle = '#000'; // Set text color
     for (let i = 0; i <= maxSpeed; i += 10) {
         const angle = (i / maxSpeed) * Math.PI;
         const x = centerX + (radius - 20) * Math.cos(angle - Math.PI / 2);
@@ -24,7 +27,7 @@ function drawSpeedometer() {
         ctx.fillText(i, x, y);
     }
 
-    // Draw needle (example position for 60 km/h)
+    // Draw the needle (example position for 60 km/h)
     drawNeedle(60);
 }
 
@@ -42,7 +45,7 @@ function drawNeedle(speed) {
     ctx.moveTo(centerX, centerY);
     ctx.lineTo(x, y);
     ctx.strokeStyle = 'red'; // Change the color to red
-    ctx.lineWidth = 10; // Make the needle thicker
+    ctx.lineWidth = 5; // Make the needle thicker
     ctx.stroke();
 }
 
