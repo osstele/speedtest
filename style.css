@@ -31,3 +31,19 @@ button {
 button:hover {
     background: #0056b3;
 }
+.directions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.directions p {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+#speedometer {
+    display: block;
+    margin: 0 auto;
+}
