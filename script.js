@@ -2,6 +2,11 @@ const canvas = document.getElementById('speedometer');
 const ctx = canvas.getContext('2d');
 
 function drawSpeedometer() {
+    if (!canvas || !ctx) {
+        console.error('Canvas or context not found');
+        return;
+    }
+
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     const radius = 140;
@@ -49,4 +54,6 @@ function drawNeedle(speed) {
     ctx.stroke();
 }
 
-drawSpeedometer();
+document.addEventListener('DOMContentLoaded', (event) => {
+    drawSpeedometer();
+});
