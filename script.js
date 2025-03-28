@@ -4,6 +4,7 @@ const speedElement = document.getElementById('speed');
 const statusElement = document.getElementById('status');
 
 let watchId;
+let geoWindow = null;
 
 function drawSpeedometer(speed = 0) {
     if (!canvas || !ctx) {
@@ -84,13 +85,27 @@ function stopTracking() {
 
 function updateSpeed(position) {
     const speed = position.coords.speed ? position.coords.speed * 3.6 : 0; // Convert from m/s to km/h
-    speedElement.textContent = speed.toFixed(2);
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    
+    speedElement.textContent = `${speed.toFixed(2)} km/h`;
     drawSpeedometer(speed);
+    
+    if (geoWindow && !geoWindow.closed) {
+        geoWindow.document.body.innerText = `Latitude: ${latitude.toFixed(4)}, Longitude: ${longitude.toFixed(4)}`;
+    }
 }
 
 function handleError(error) {
     console.error(error);
     statusElement.textContent = 'Error getting geolocation: ' + error.message;
+}
+
+function openGeoWindow() {
+    if (!geoWindow || geoWindow.closed) {
+        geoWindow = window.open('', 'GeoWindow', 'width=300,height=200');
+        geoWindow.document.write('<html><head><title>Geolocation</title></head><body></body></html>');
+    }
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
