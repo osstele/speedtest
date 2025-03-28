@@ -36,28 +36,4 @@ function drawSpeedometer() {
         ctx.fillText(i, x, y);
     }
 
-    // Draw the needle (example position for 60 km/h)
-    drawNeedle(60);
-}
-
-function drawNeedle(speed) {
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    const radius = 140;
-    const maxSpeed = 120;
-
-    const angle = (speed / maxSpeed) * Math.PI - Math.PI / 2;
-    const x = centerX + (radius - 30) * Math.cos(angle);
-    const y = centerY + (radius - 30) * Math.sin(angle);
-
-    ctx.beginPath();
-    ctx.moveTo(centerX, centerY);
-    ctx.lineTo(x, y);
-    ctx.strokeStyle = 'red'; // Change the color to red
-    ctx.lineWidth = 5; // Make the needle thicker
-    ctx.stroke();
-}
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    drawSpeedometer();
-});
+    // Draw the* ▋
