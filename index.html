@@ -15,12 +15,7 @@
         <button onclick="stopTracking()">Stop Tracking</button>
         <button onclick="openGeoWindow()">Show Geolocation</button>
         <p id="status">Waiting for GPS...</p>
-        <div class="directions">
-            <p id="north">North</p>
-            <p id="south">South</p>
-            <p id="east">East</p>
-            <p id="west">West</p>
-        </div>
+        <canvas id="compass" width="100" height="100" style="background-color: white;"></canvas>
     </div>
     <script src="script.js"></script>
 </body>
