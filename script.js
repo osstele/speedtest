@@ -2,6 +2,8 @@ const canvas = document.getElementById('speedometer');
 const ctx = canvas.getContext('2d');
 const speedElement = document.getElementById('speed');
 const statusElement = document.getElementById('status');
+const compass = document.getElementById('compass');
+const compassCtx = compass.getContext('2d');
 
 let watchId;
 let geoWindow = null;
@@ -63,6 +65,47 @@ function drawNeedle(speed) {
     ctx.stroke();
 }
 
+function drawCompass(direction = 0) {
+    if (!compass || !compassCtx) {
+        console.error('Compass canvas or context not found');
+        return;
+    }
+
+    const centerX = compass.width / 2;
+    const centerY = compass.height / 2;
+    const radius = 40;
+
+    compassCtx.clearRect(0, 0, compass.width, compass.height);
+
+    // Draw outer circle
+    compassCtx.beginPath();
+    compassCtx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+    compassCtx.strokeStyle = '#000';
+    compassCtx.lineWidth = 2;
+    compassCtx.stroke();
+
+    // Draw direction needle
+    const angle = direction * (Math.PI / 180); // Convert to radians
+    const x = centerX + radius * Math.cos(angle - Math.PI / 2);
+    const y = centerY + radius * Math.sin(angle - Math.PI / 2);
+
+    compassCtx.beginPath();
+    compassCtx.moveTo(centerX, centerY);
+    compassCtx.lineTo(x, y);
+    compassCtx.strokeStyle = 'red';
+    compassCtx.lineWidth = 2;
+    compassCtx.stroke();
+
+    // Draw N, E, S, W
+    compassCtx.font = '10px Arial';
+    compassCtx.fillStyle = 'black';
+    compassCtx.textAlign = 'center';
+    compassCtx.fillText('N', centerX, centerY - radius - 10);
+    compassCtx.fillText('E', centerX + radius + 10, centerY);
+    compassCtx.fillText('S', centerX, centerY + radius + 10);
+    compassCtx.fillText('W', centerX - radius - 10, centerY);
+}
+
 function startTracking() {
     if (navigator.geolocation) {
         watchId = navigator.geolocation.watchPosition(
@@ -87,9 +130,11 @@ function updateSpeed(position) {
     const speed = position.coords.speed ? position.coords.speed * 3.6 : 0; // Convert from m/s to km/h
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
+    const direction = position.coords.heading || 0;
     
     speedElement.textContent = `${speed.toFixed(2)} km/h`;
     drawSpeedometer(speed);
+    drawCompass(direction);
     
     if (geoWindow && !geoWindow.closed) {
         geoWindow.document.body.innerText = `Latitude: ${latitude.toFixed(4)}, Longitude: ${longitude.toFixed(4)}`;
@@ -110,4 +155,5 @@ function openGeoWindow() {
 
 document.addEventListener('DOMContentLoaded', (event) => {
     drawSpeedometer();
+    drawCompass();
 });
